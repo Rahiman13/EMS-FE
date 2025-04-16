@@ -39,13 +39,14 @@ import {
   Logout as LogoutIcon,
   Notifications as NotificationsIcon,
   MenuOpen as MenuOpenIcon,
+  People as PeopleIcon,
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { logoutUser } from '../../store/slices/authSlice';
 import { ThemeContext } from '../../theme/ThemeProvider';
 import { motion } from 'framer-motion';
 
-const drawerWidth = 290;
+const drawerWidth = 295;
 const collapsedDrawerWidth = 50;
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -103,6 +104,7 @@ const DrawerHeader = styled('div')(({ theme, collapsed }) => ({
   display: 'flex',
   alignItems: 'center',
   width: '100%',
+  height: '10.3%',
   padding: theme.spacing(0, collapsed ? 0 : 1),
   ...theme.mixins.toolbar,
   // justifyContent: collapsed ? 'center' : 'flex-end',
@@ -271,7 +273,8 @@ const Layout = () => {
     { text: 'Calendar', icon: <CalendarIcon />, path: '/calendar' },
     { text: 'Tasks', icon: <TaskIcon />, path: '/tasks' },
     { text: 'Chat', icon: <ChatIcon />, path: '/chat' },
-    { text: 'Profile', icon: <PersonIcon />, path: '/profile' },
+    // { text: 'Profile', icon: <PersonIcon />, path: '/profile' },
+    { text: 'Employee Management', icon: <PeopleIcon />, path: '/employees' },
   ];
 
   if (user?.role === 'CEO') {
@@ -331,6 +334,65 @@ const Layout = () => {
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+            <Tooltip title="Profile" arrow>
+              <IconButton
+                onClick={handleProfileMenuOpen}
+                sx={{
+                  p: 0,
+                  bgcolor: isDarkMode ? 'rgba(217, 118, 74, 0.1)' : 'rgba(43, 90, 158, 0.04)',
+                  '&:hover': {
+                    bgcolor: isDarkMode ? 'rgba(217, 118, 74, 0.2)' : 'rgba(43, 90, 158, 0.1)'
+                  },
+                  width: 40,
+                  height: 40,
+                }}
+              >
+                <Avatar
+                  alt={user?.name || 'User'}
+                  src={user?.avatar}
+                  sx={{ 
+                    width: 32, 
+                    height: 32,
+                    border: `2px solid ${isDarkMode ? '#d9764a' : '#2b5a9e'}`
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleProfileMenuClose}
+              PaperProps={{
+                sx: {
+                  mt: 1.5,
+                  bgcolor: isDarkMode ? '#1f2937' : '#ffffff',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+                  borderRadius: '12px',
+                  minWidth: 200,
+                }
+              }}
+              transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+              anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+              <MenuItem onClick={() => {
+                handleProfileMenuClose();
+                navigate('/profile');
+              }}>
+                <ListItemIcon>
+                  <PersonIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="My Profile" />
+              </MenuItem>
+              <MenuItem onClick={() => {
+                handleProfileMenuClose();
+                navigate('/settings');
+              }}>
+                <ListItemIcon>
+                  <SettingsIcon fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Settings" />
+              </MenuItem>
+            </Menu>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -467,6 +529,8 @@ const Layout = () => {
           })}
         </List>
       </StyledDrawer>
+
+      {/* main content */}
       <Box
         component={motion.div}
         initial={{ opacity: 0, y: 20 }}
@@ -478,7 +542,7 @@ const Layout = () => {
         }}
         sx={{
           flexGrow: 1,
-          p: 4,
+          p: 3,
           mt: '80px',
           ml: open ? '1px' : '0px',
           transition: 'margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',

@@ -13,8 +13,9 @@ import Profile from './pages/profile/Profile';
 import Calendar from './pages/calendar/Calendar';
 import Tasks from './pages/tasks/Tasks';
 import Chat from './pages/chat/Chat';
-import EmployeeManagement from './pages/admin/EmployeeManagement';
-import HolidayManagement from './pages/admin/HolidayManagement';
+import Employee from './pages/employee/Employee';
+// import EmployeeManagement from './pages/admin/EmployeeManagement';
+// import HolidayManagement from './pages/admin/HolidayManagement';
 import PrivateRoute from './components/auth/PrivateRoute';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,14 +24,14 @@ import { checkAuthStatus } from './store/slices/authSlice';
 // Wrapper component to check auth status
 const AuthCheck = ({ children }) => {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     // Only check auth status if we have a token and role in localStorage
     if (localStorage.getItem('token') && localStorage.getItem('role')) {
       dispatch(checkAuthStatus());
     }
   }, [dispatch]);
-  
+
   return children;
 };
 
@@ -42,7 +43,7 @@ const ThemeInitializer = ({ children }) => {
       localStorage.setItem('theme', 'light'); // Default theme
     }
   }, []);
-  
+
   return children;
 };
 
@@ -84,10 +85,11 @@ const AppRoutes = () => {
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/chat" element={<Chat />} />
-              <Route path="/admin">
+              <Route path="/employees" element={<Employee />} />
+              {/* <Route path="/admin">
                 <Route path="employees" element={<EmployeeManagement />} />
                 <Route path="holidays" element={<HolidayManagement />} />
-              </Route>
+              </Route> */}
             </Route>
           </Routes>
         </AuthCheck>
