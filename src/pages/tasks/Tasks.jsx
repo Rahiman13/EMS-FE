@@ -651,14 +651,14 @@ const Tasks = () => {
       filteredTasks = filteredTasks.filter(task => task.status === 'cancelled');
     }
 
-    // Filter by search query
+    // Filter by search query with null check for assignedTo
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filteredTasks = filteredTasks.filter(task =>
         task.title.toLowerCase().includes(query) ||
         (task.description && task.description.toLowerCase().includes(query)) ||
         (task.category && task.category.toLowerCase().includes(query)) ||
-        (task.assignedTo.name && task.assignedTo.name.toLowerCase().includes(query))
+        (task.assignedTo?.name && task.assignedTo.name.toLowerCase().includes(query))
       );
     }
 

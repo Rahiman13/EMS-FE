@@ -671,7 +671,7 @@ const SignUp = () => {
                     // }
                     >
                       <MenuItem value="Employee">👔 Employee</MenuItem>
-                      <MenuItem value="Admin">🛡️ Admin</MenuItem>
+                      <MenuItem value="CEO">🛡️ CEO</MenuItem>
                     </Select>
                   </FormControl>
                 </motion.div>

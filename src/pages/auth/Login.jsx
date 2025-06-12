@@ -375,8 +375,9 @@ const Login = () => {
                         ),
                       }}
                       sx={{
+                        color: '#000',
                         '& .MuiOutlinedInput-root': {
-                          color: '#333333',
+                          color: '#000',
                           borderRadius: '14px',
                           backgroundColor: '#f8f9fa',
                           transition: 'all 0.3s ease',

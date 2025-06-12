@@ -1,3 +1,3 @@
-const API = 'http://localhost:5000/api';
+const API = 'https://ems-z1e3.onrender.com/api';
 
 export default API;
